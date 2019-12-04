@@ -19,9 +19,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class response {
-    HashMap<String,HashMap<String,String>> mymap;
+    private HashMap<String,HashMap<String,String>> mymap;
 
-    public response(String url, Context context){
+    response(String url, Context context){
 
 
 
@@ -63,12 +63,15 @@ public class response {
                     JSONArray jsonArray=jsonObject.getJSONArray("data");
                     for(int i=0;i<jsonArray.length();i++){
                         JSONObject tempjson=jsonArray.getJSONObject(i);
+                        //in here use a new hash map and add value by a loop
                         HashMap<String,String> tempmap=new HashMap<>();
                         tempmap.put("id",tempjson.getString("id"));
                         tempmap.put("name",tempjson.getString("name"));
                         tempmap.put("year",tempjson.getString("year"));
                         tempmap.put("color",tempjson.getString("color"));
                         tempmap.put("pantone_value",tempjson.getString("pantone_value"));
+
+                        // than hole value is added into a main hasmap
                         mymap.put(String.valueOf(i),tempmap);
                     }
                     for(int j=0;j<mymap.size();j++){
@@ -85,13 +88,13 @@ public class response {
 
 
 
-//                ((Activity)context).runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        MainActivity.serverresponse= mymap.get("email");
-//                        MainActivity.fun();
-//                    }
-//                });
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                       // MainActivity.serverresponse= mymap.get("email");
+                        MainActivity.fun(mymap,context);
+                    }
+                });
 
 
 
